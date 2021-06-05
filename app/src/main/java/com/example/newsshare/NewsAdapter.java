@@ -33,10 +33,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Model model = newsList.get(position);
-        int width = holder.image.getWidth();
-        int height = holder.image.getHeight();
         holder.title.setText(model.getContent());
         String s = model.getContent();
+        holder.date.setText(model.getDate());
         Glide.with(holder.image.getContext()).load(newsList.get(position).getImageUrl()).into(holder.image);
         holder.singleNews.setOnClickListener(v -> {
             CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
@@ -54,10 +53,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         private final TextView title;
         private final ImageView image;
         private final ConstraintLayout singleNews;
+        private final TextView date;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image);
             title = itemView.findViewById(R.id.title);
+            date = itemView.findViewById(R.id.publishedOn);
             singleNews = itemView.findViewById(R.id.singleNews);
         }
     }

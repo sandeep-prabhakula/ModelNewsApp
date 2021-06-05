@@ -1,15 +1,11 @@
 package com.example.newsshare;
 
 import android.app.ProgressDialog;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,9 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -27,10 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +53,10 @@ public class MainActivity extends AppCompatActivity {
                         JSONArray jsonArray = response.getJSONArray("articles");
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject obj = jsonArray.getJSONObject(i);
-                            newsList.add(new Model(obj.getString("title"),obj.getString("urlToImage"),obj.getString("url")));
+                            newsList.add(new Model(obj.getString("title"),
+                                                   obj.getString("urlToImage"),
+                                                   obj.getString("url"),
+                                                   obj.getString("publishedAt")));
                         }
                         news.setAdapter(adapter);
                     } catch (JSONException e) {
