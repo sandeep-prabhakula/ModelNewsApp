@@ -13,13 +13,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private final List<Model> newsList;
-    public ItemClicker itemClicker;
     public NewsAdapter(List<Model> newsList) {
         this.newsList = newsList;
     }
@@ -39,13 +37,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         int height = holder.image.getHeight();
         holder.title.setText(model.getContent());
         String s = model.getContent();
-//        Glide.with(holder.image.getContext()).load(newsList.get(position).getImageUrl()).into(holder.image);
-//        Picasso.get().load(model.getImageUrl())
-//                .resize(width,height).into(holder.image);
+        Glide.with(holder.image.getContext()).load(newsList.get(position).getImageUrl()).into(holder.image);
         holder.singleNews.setOnClickListener(v -> {
             CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(v.getContext(), Uri.parse("https://google"+s+".com"));
+        customTabsIntent.launchUrl(v.getContext(), Uri.parse(model.getContentUrl()));
         });
     }
 
@@ -54,7 +50,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         return newsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView title;
         private final ImageView image;
         private final ConstraintLayout singleNews;
@@ -63,22 +59,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             image = itemView.findViewById(R.id.image);
             title = itemView.findViewById(R.id.title);
             singleNews = itemView.findViewById(R.id.singleNews);
-            itemView.setOnClickListener(this);
         }
-
-        @Override
-        public void onClick(View v) {
-            if(itemClicker!=null)itemClicker.clicked(v,getAdapterPosition());
-        }
-    }
-    Model getItem(int id){
-        return newsList.get(id);
-    }
-    void setOnClickListener(ItemClicker clickListener){
-        this.itemClicker = clickListener;
-    }
-
-    public interface ItemClicker{
-        void clicked(View v,int position);
     }
 }

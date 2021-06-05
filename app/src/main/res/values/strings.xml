@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">NewsShare</string>
+    <string name="app_name">Sandeep Broadcasting Company</string>
     <string name="content">content</string>
+    <string name="news_img">News_Img</string>
 </resources>
