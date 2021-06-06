@@ -4,6 +4,7 @@
     android:id="@+id/singleNews"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     android:orientation="horizontal"
     android:padding="10dp">
 
@@ -11,20 +12,21 @@
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:contentDescription="@string/news_img"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_launcher_background"
-            android:contentDescription="@string/news_img" />
+            app:srcCompat="@drawable/ic_launcher_background" />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:maxLines="4"
             android:textColor="#002EFF"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
 </androidx.constraintlayout.widget.ConstraintLayout>

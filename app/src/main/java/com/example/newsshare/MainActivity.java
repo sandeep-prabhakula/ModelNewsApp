@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity {
         pd.show();
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                "https://saurav.tech/NewsAPI/top-headlines/category/health/in.json", null, response -> {
+                "https://saurav.tech/NewsAPI/everything/cnn.json", null, response -> {
                     try {
                         pd.dismiss();
                         JSONArray jsonArray = response.getJSONArray("articles");
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject obj = jsonArray.getJSONObject(i);
-                            newsList.add(new Model(obj.getString("title"),
+                            newsList.add(new Model(obj.getString("description"),
                                                    obj.getString("urlToImage"),
                                                    obj.getString("url"),
                                                    obj.getString("publishedAt")));
