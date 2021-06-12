@@ -46,17 +46,18 @@ public class MainActivity extends AppCompatActivity {
         pd.setMessage("Loading...");
         pd.show();
         RequestQueue rq = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,"https://gnews.io/api/v4/top-headlines?token=d268f3cd177dec9b046ce098863f23c0&lang=en",
-                                                                    null, response -> {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                "https://api.currentsapi.services/v1/latest-news?language=en&apiKey=35lSJkzqiVJ1mx6HphYIy2cKhsTALMe1YsAeeYuM_SL-pGXr", null,
+                response -> {
                     try {
                         pd.dismiss();
-                        JSONArray jsonArray = response.getJSONArray("articles");
+                        JSONArray jsonArray = response.getJSONArray("news");
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject obj = jsonArray.getJSONObject(i);
                             newsList.add(new Model(obj.getString("description"),
                                                    obj.getString("image"),
                                                    obj.getString("url"),
-                                                   obj.getString("publishedAt")));
+                                                   obj.getString("published")));
                         }
                         news.setAdapter(adapter);
                     } catch (JSONException e) {
@@ -68,5 +69,32 @@ public class MainActivity extends AppCompatActivity {
             if(error instanceof NetworkError) Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
         });
         rq.add(jsonObjectRequest);
+
+
+
+//        RequestQueue rq = Volley.newRequestQueue(this);
+//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
+//                "https://api.spaceflightnewsapi.net/v3/articles", null, response -> {
+//            pd.dismiss();
+//            for(int i=0;i<response.length();i++){
+//                try {
+//                    JSONObject obj = response.getJSONObject(i);
+//                    newsList.add(new Model(obj.getString("summary"),
+//                                               obj.getString("imageUrl"),
+//                                               obj.getString("url"),
+//                                               obj.getString("publishedAt")));
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            news.setAdapter(adapter);
+//        }, error -> {
+//            pd.dismiss();
+//            Log.d("Aipaye...",error.toString());
+//            if(error instanceof NetworkError){
+//                Toast.makeText(MainActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        rq.add(jsonArrayRequest);
     }
 }
