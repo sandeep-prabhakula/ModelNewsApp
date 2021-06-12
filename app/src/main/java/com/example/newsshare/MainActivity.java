@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -31,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loadNews();
         news = findViewById(R.id.news);
         newsList = new ArrayList<>();
-        loadNews();
         news.addItemDecoration(new DividerItemDecoration(news.getContext(),DividerItemDecoration.VERTICAL));
         news.setHasFixedSize(true);
         news.setLayoutManager(new LinearLayoutManager(this));
@@ -46,15 +49,15 @@ public class MainActivity extends AppCompatActivity {
         pd.setMessage("Loading...");
         pd.show();
         RequestQueue rq = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                "https://saurav.tech/NewsAPI/everything/cnn.json", null, response -> {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,"https://gnews.io/api/v4/top-headlines?token=d268f3cd177dec9b046ce098863f23c0&lang=en",
+                                                                    null, response -> {
                     try {
                         pd.dismiss();
                         JSONArray jsonArray = response.getJSONArray("articles");
                         for(int i=0;i<jsonArray.length();i++){
                             JSONObject obj = jsonArray.getJSONObject(i);
                             newsList.add(new Model(obj.getString("description"),
-                                                   obj.getString("urlToImage"),
+                                                   obj.getString("image"),
                                                    obj.getString("url"),
                                                    obj.getString("publishedAt")));
                         }
