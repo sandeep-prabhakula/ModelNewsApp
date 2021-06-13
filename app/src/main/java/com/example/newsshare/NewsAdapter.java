@@ -1,5 +1,6 @@
 package com.example.newsshare;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         CustomTabsIntent customTabsIntent = builder.build();
         customTabsIntent.launchUrl(v.getContext(), Uri.parse(model.getContentUrl()));
         });
+        holder.share.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the news\n"+model.getContentUrl());
+            v.getContext().startActivity(Intent.createChooser(i,"choose an app"));
+        });
     }
 
     @Override
@@ -49,17 +55,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         return newsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView title;
         private final ImageView image;
         private final ConstraintLayout singleNews;
         private final TextView date;
+        private final ImageView share;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image);
             title = itemView.findViewById(R.id.title);
             date = itemView.findViewById(R.id.publishedOn);
             singleNews = itemView.findViewById(R.id.singleNews);
+            share = itemView.findViewById(R.id.share);
         }
     }
 }
