@@ -1,9 +1,9 @@
 package com.example.newsshare;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -66,35 +66,16 @@ public class MainActivity extends AppCompatActivity {
                 }, error -> {
             pd.dismiss();
             Log.d("Rale",error.toString());
-            if(error instanceof NetworkError) Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            if(error instanceof NetworkError){
+                new AlertDialog.Builder(this)
+                        .setIcon(R.drawable.ic_baseline_error_24)
+                        .setTitle("No Internet Connection")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", (dialog, which) -> onBackPressed())
+                        .setMessage("please check your internet connection or make your wifi toggle switch on.")
+                        .show();
+            }
         });
         rq.add(jsonObjectRequest);
-
-
-
-//        RequestQueue rq = Volley.newRequestQueue(this);
-//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
-//                "https://api.spaceflightnewsapi.net/v3/articles", null, response -> {
-//            pd.dismiss();
-//            for(int i=0;i<response.length();i++){
-//                try {
-//                    JSONObject obj = response.getJSONObject(i);
-//                    newsList.add(new Model(obj.getString("summary"),
-//                                               obj.getString("imageUrl"),
-//                                               obj.getString("url"),
-//                                               obj.getString("publishedAt")));
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            news.setAdapter(adapter);
-//        }, error -> {
-//            pd.dismiss();
-//            Log.d("Aipaye...",error.toString());
-//            if(error instanceof NetworkError){
-//                Toast.makeText(MainActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        rq.add(jsonArrayRequest);
     }
 }
