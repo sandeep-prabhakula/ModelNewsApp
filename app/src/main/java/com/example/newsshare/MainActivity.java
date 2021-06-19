@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     NewsAdapter adapter;
     RecyclerView news;
     int page = 0;
-    int limit = 2;
+    int limit = 10;
     NestedScrollView nest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
