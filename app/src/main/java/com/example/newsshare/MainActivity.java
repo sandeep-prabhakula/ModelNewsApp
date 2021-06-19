@@ -4,10 +4,11 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,14 +31,27 @@ public class MainActivity extends AppCompatActivity {
     List<Model> newsList;
     NewsAdapter adapter;
     RecyclerView news;
+    int page = 0;
+    int limit = 2;
+    NestedScrollView nest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ImageView reload = findViewById(R.id.reload);
-        reload.setOnClickListener(v -> recreate());
-        Objects.requireNonNull(getSupportActionBar()).hide();
-        loadNews();
+//        ImageView reload = findViewById(R.id.reload);
+//        reload.setOnClickListener(v -> recreate());
+//        Objects.requireNonNull(getSupportActionBar()).hide();
+        nest = findViewById(R.id.nested);
+        loadNews( page, limit);
+        nest.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()){
+                    page++;
+                    loadNews(page,limit);
+                }
+            }
+        });
         news = findViewById(R.id.news);
         newsList = new ArrayList<>();
         news.addItemDecoration(new DividerItemDecoration(news.getContext(),DividerItemDecoration.VERTICAL));
@@ -47,7 +61,11 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    private void loadNews() {
+    private void loadNews(int page,int limit) {
+        if (page > limit) {
+            Toast.makeText(this, "You're all caught up", Toast.LENGTH_SHORT).show();
+            return;
+        }
         ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Loading...");
         pd.show();
