@@ -17,52 +17,46 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
-    private final List<Model> newsList;
-    public NewsAdapter(List<Model> newsList) {
-        this.newsList = newsList;
+public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> {
+    private final List<SavedModel>list;
+    public SavedAdapter(List<SavedModel> list) {
+        this.list = list;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.news_layout,parent,false);
+                .inflate(R.layout.saved_layout,parent,false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Model model = newsList.get(position);
-        holder.title.setText(model.getContent());
+        SavedModel model = list.get(position);
+        holder.title.setText(model.getDescription());
         holder.date.setText(model.getDate());
-        Glide.with(holder.image.getContext()).load(newsList.get(position).getImageUrl()).into(holder.image);
+        Glide.with(holder.image.getContext()).load(list.get(position).getImageUrl()).into(holder.image);
         holder.singleNews.setOnClickListener(v -> {
             CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(v.getContext(), Uri.parse(model.getContentUrl()));
+            CustomTabsIntent customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(v.getContext(), Uri.parse(model.getNewsUrl()));
         });
         holder.share.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_SEND);
-            i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the news\n"+model.getContentUrl());
+            i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the news\n"+model.getNewsUrl());
             v.getContext().startActivity(Intent.createChooser(i,"choose an app"));
         });
-
-
         holder.save.setOnClickListener(v -> {
             MyDbHandler dbHandler = new MyDbHandler(v.getContext());
-            SavedModel news = new SavedModel();
-            news.setDate(model.getDate());
-            news.setDescription(model.getContent());
-            news.setImageUrl(model.getImageUrl());
-            news.setNewsUrl(model.getContentUrl());
-            dbHandler.addNews(news);
+            dbHandler.deleteTodo(model.getId());
+            v.getContext().startActivity(new Intent(v.getContext(),Saved.class));
         });
     }
 
     @Override
     public int getItemCount() {
-        return newsList.size();
+        return list.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,7 +73,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             date = itemView.findViewById(R.id.publishedOn);
             singleNews = itemView.findViewById(R.id.singleNews);
             share = itemView.findViewById(R.id.share);
-            save = itemView.findViewById(R.id.save);
+            save = itemView.findViewById(R.id.unsave);
         }
     }
 }

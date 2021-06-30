@@ -11,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsShare">
+        <activity android:name=".Saved"
+            android:label="Saved"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".Splash_Screen">
             <intent-filter>

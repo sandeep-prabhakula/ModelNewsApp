@@ -53,4 +53,16 @@
             app:layout_constraintTop_toBottomOf="@+id/title"
             app:srcCompat="@drawable/ic_baseline_share_24"
             app:tint="#002EFF" />
+
+        <ImageView
+            android:id="@+id/save"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/publishedOn"
+            app:layout_constraintRight_toRightOf="parent"
+            app:tint="#002EFF"
+            app:srcCompat="@drawable/ic_baseline_archive_24"
+            android:contentDescription="@string/save" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
