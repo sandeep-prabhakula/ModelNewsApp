@@ -34,17 +34,17 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SavedModel model = list.get(position);
-        holder.title.setText(model.getDescription());
+        holder.title.setText(model.getNewsUrl());
         holder.date.setText(model.getDate());
         Glide.with(holder.image.getContext()).load(list.get(position).getImageUrl()).into(holder.image);
         holder.singleNews.setOnClickListener(v -> {
             CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
             CustomTabsIntent customTabsIntent = builder.build();
-            customTabsIntent.launchUrl(v.getContext(), Uri.parse(model.getNewsUrl()));
+            customTabsIntent.launchUrl(v.getContext(), Uri.parse(model.getDescription()));
         });
         holder.share.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_SEND);
-            i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the news\n"+model.getNewsUrl());
+            i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the news\n"+model.getDescription());
             v.getContext().startActivity(Intent.createChooser(i,"choose an app"));
         });
         holder.save.setOnClickListener(v -> {

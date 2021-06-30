@@ -22,8 +22,8 @@ public class MyDbHandler extends SQLiteOpenHelper {
                 +Params.KEY_ID+" INTEGER PRIMARY KEY, "
                 +Params.KEY_NEWS_IMAGE+" TEXT, "
                 +Params.KEY_NEWS_DESC+" TEXT, "
-                +Params.KEY_NEWS_URL+" TEXT, "
-                +Params.KEY_NEWS_DATE+" TEXT)";
+                +Params.KEY_NEWS_DATE+" TEXT, "
+                +Params.KEY_NEWS_URL+" TEXT)";
         db.execSQL(create);
     }
 
@@ -39,7 +39,6 @@ public class MyDbHandler extends SQLiteOpenHelper {
         values.put(Params.KEY_NEWS_DESC,meme.getDescription());
         values.put(Params.KEY_NEWS_DATE,meme.getDate());
         values.put(Params.KEY_NEWS_URL,meme.getNewsUrl());
-        Log.d("newsDB",meme.getDescription()+"\n"+meme.getImageUrl()+"\n"+meme.getDate()+"\n"+meme.getNewsUrl()+" Successfully inserted");
         db.insert(Params.TABLE_NAME,null,values);
         db.close();
     }
@@ -58,7 +57,6 @@ public class MyDbHandler extends SQLiteOpenHelper {
                 meme.setDescription(cursor.getString(3));
                 meme.setDate(cursor.getString(4));
                 memesList.add(meme);
-                Log.d("newsDB",meme.getDescription()+"cursor moved");
             }while(cursor.moveToNext());
         }
         cursor.close();

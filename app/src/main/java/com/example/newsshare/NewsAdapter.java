@@ -47,15 +47,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the news\n"+model.getContentUrl());
             v.getContext().startActivity(Intent.createChooser(i,"choose an app"));
         });
-
-
         holder.save.setOnClickListener(v -> {
             MyDbHandler dbHandler = new MyDbHandler(v.getContext());
             SavedModel news = new SavedModel();
-            news.setDate(model.getDate());
-            news.setDescription(model.getContent());
             news.setImageUrl(model.getImageUrl());
-            news.setNewsUrl(model.getContentUrl());
+            news.setDescription(model.getContentUrl());
+            news.setDate(model.getDate());
+            news.setNewsUrl(model.getContent());
             dbHandler.addNews(news);
         });
     }
