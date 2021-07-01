@@ -51,9 +51,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             MyDbHandler dbHandler = new MyDbHandler(v.getContext());
             SavedModel news = new SavedModel();
             news.setImageUrl(model.getImageUrl());
-            news.setDescription(model.getContentUrl());
+            news.setDescription(model.getContent());
             news.setDate(model.getDate());
-            news.setNewsUrl(model.getContent());
+            news.setNewsUrl(model.getContentUrl());
             dbHandler.addNews(news);
         });
     }

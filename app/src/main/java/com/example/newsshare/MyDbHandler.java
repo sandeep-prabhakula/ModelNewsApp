@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +31,13 @@ public class MyDbHandler extends SQLiteOpenHelper {
 
     }
 
-    public void addNews(SavedModel meme){
+    public void addNews(SavedModel news){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Params.KEY_NEWS_IMAGE,meme.getImageUrl());
-        values.put(Params.KEY_NEWS_DESC,meme.getDescription());
-        values.put(Params.KEY_NEWS_DATE,meme.getDate());
-        values.put(Params.KEY_NEWS_URL,meme.getNewsUrl());
+        values.put(Params.KEY_NEWS_IMAGE,news.getImageUrl());
+        values.put(Params.KEY_NEWS_DESC,news.getDescription());
+        values.put(Params.KEY_NEWS_DATE,news.getDate());
+        values.put(Params.KEY_NEWS_URL,news.getNewsUrl());
         db.insert(Params.TABLE_NAME,null,values);
         db.close();
     }
