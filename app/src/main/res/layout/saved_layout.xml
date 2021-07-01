@@ -62,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@id/publishedOn"
         app:layout_constraintRight_toRightOf="parent"
         app:tint="#002EFF"
-        app:srcCompat="@drawable/ic_baseline_archive_24"
+        app:srcCompat="@drawable/ic_baseline_bookmark_24"
         android:contentDescription="@string/save" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

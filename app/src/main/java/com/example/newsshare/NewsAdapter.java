@@ -55,6 +55,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             news.setDate(model.getDate());
             news.setNewsUrl(model.getContentUrl());
             dbHandler.addNews(news);
+            holder.save.setImageResource(R.drawable.ic_baseline_bookmark_24);
         });
     }
 

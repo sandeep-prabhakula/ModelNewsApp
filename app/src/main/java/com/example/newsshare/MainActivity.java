@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     List<Model> newsList;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         nest = findViewById(R.id.nested);
 
         ImageView saved = findViewById(R.id.saved);

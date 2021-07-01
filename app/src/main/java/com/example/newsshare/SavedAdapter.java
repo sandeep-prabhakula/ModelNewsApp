@@ -50,6 +50,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> 
         holder.save.setOnClickListener(v -> {
             MyDbHandler dbHandler = new MyDbHandler(v.getContext());
             dbHandler.deleteTodo(model.getId());
+            holder.save.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
             v.getContext().startActivity(new Intent(v.getContext(),Saved.class));
         });
     }

@@ -43,8 +43,29 @@
         app:layout_constraintBottom_toTopOf="@id/nested"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_archive_24"
+        app:srcCompat="@drawable/ic_baseline_bookmark_24"
         app:tint="#002EFF"
         android:contentDescription="@string/todo" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="cursive"
+        android:text="@string/sandeep_broadcasting_company"
+        android:textAllCaps="false"
+        android:textColor="#002EFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/nested"
+        app:layout_constraintEnd_toStartOf="@+id/saved"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
