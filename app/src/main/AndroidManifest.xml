@@ -13,9 +13,12 @@
         android:theme="@style/Theme.NewsShare">
         <activity android:name=".Saved"
             android:label="Saved"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Splash_Screen">
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Splash_Screen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
