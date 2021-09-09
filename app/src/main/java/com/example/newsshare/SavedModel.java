@@ -7,20 +7,6 @@ public class SavedModel {
     private String date;
     private int id;
 
-    public SavedModel(String imageUrl, String newsUrl, String description, String date, int id) {
-        this.imageUrl = imageUrl;
-        this.newsUrl = newsUrl;
-        this.description = description;
-        this.date = date;
-        this.id = id;
-    }
-
-    public SavedModel(String imageUrl, String newsUrl, String description, String date) {
-        this.imageUrl = imageUrl;
-        this.newsUrl = newsUrl;
-        this.description = description;
-        this.date = date;
-    }
     public SavedModel(){}
 
     public String getImageUrl() {
