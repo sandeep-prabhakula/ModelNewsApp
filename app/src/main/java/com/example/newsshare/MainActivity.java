@@ -9,10 +9,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.widget.NestedScrollView;
@@ -32,6 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     List<Model> newsList;
@@ -47,13 +48,12 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Today's Bulletin");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         nest = findViewById(R.id.nested);
         categories = findViewById(R.id.categories);
-        ImageView saved = findViewById(R.id.saved);
         pb3 = findViewById(R.id.actvityMainProgressBar);
-        saved.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Saved.class)));
         pb3.setVisibility(View.GONE);
         loadNews( page, limit);
         nest.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         category.add(new CategoryPOJO("sports"));
         category.add(new CategoryPOJO("business"));
         category.add(new CategoryPOJO("health"));
+        category.add(new CategoryPOJO("technology"));
         news.addItemDecoration(new DividerItemDecoration(news.getContext(),DividerItemDecoration.VERTICAL));
         news.setHasFixedSize(true);
         news.setLayoutManager(new LinearLayoutManager(this));
@@ -168,6 +169,63 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.savedIntent){
+            startActivity(new Intent(this,Saved.class));
+        }
+        if(item.getItemId()==R.id.app_bar_search){
+            SearchView searchView = (SearchView) item.getActionView();
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    searchedNews(query);
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    searchedNews(newText);
+                    return false;
+                }
+            });
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void searchedNews(String query) {
+        newsList.clear();
+        filterList.clear();
+        String url = "https://api.currentsapi.services/v1/search?language=en&keywords="+query+"&apiKey=35lSJkzqiVJ1mx6HphYIy2cKhsTALMe1YsAeeYuM_SL-pGXr";
+        RequestQueue rq = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                url, null,
+                response -> {
+                    try {
+                        pb3.setVisibility(View.GONE);
+                        JSONArray jsonArray = response.getJSONArray("news");
+                        for(int i=0;i<jsonArray.length();i++){
+                            JSONObject obj = jsonArray.getJSONObject(i);
+                            filterList.add(new Model(obj.getString("description"),
+                                    obj.getString("image"),
+                                    obj.getString("url"),
+                                    obj.getString("published")));
+                        }
+                        news.setAdapter(adapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            pb3.setVisibility(View.GONE);
+            Log.d("Rale",error.toString());
+            if(error instanceof NetworkError){
+                Intent intent = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
+                startActivity(intent);
+            }
+        });
+        rq.add(jsonObjectRequest);
     }
 
     @Override

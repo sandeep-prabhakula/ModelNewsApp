@@ -9,4 +9,11 @@
         app:showAsAction="always|collapseActionView"
         app:iconTint="@color/white"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
+    <item
+        android:id="@+id/savedIntent"
+        android:title="saved"
+        android:icon="@drawable/ic_baseline_bookmark_border_24"
+        app:iconTint="@color/white"
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="android.widget.ImageView" />
 </menu>

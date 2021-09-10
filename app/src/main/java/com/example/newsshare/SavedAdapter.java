@@ -1,5 +1,6 @@
 package com.example.newsshare;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> 
         return new ViewHolder(v);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SavedModel model = list.get(position);
@@ -51,6 +53,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> 
             MyDbHandler dbHandler = new MyDbHandler(v.getContext());
             dbHandler.deleteTodo(model.getId());
             holder.save.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
+            notifyDataSetChanged();
             v.getContext().startActivity(new Intent(v.getContext(),Saved.class));
         });
     }
